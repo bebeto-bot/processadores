@@ -6,6 +6,7 @@ class ControlUnit {
   int sel_ula;
   int carga_ac;
   bool incrementa_pc;
+  int carga_pc
   
 };
 class ULA {
@@ -70,9 +71,17 @@ class RI {
 };
 class PC {
     int pc;
+    void receber(ControlUnit a){
+    pc = a.carga_pc;
+    
+  }
 };
 class AC {
     int ac;
+    void receber(ControlUnit a){
+    ac = a.carga_ac;
+    
+  }
 };
 class MUX{
   void mux(ControlUnit a,RDM b,PC c,REM d){
@@ -83,4 +92,4 @@ class MUX{
       d.adress = b.adress;
     }
   }
-}
+};

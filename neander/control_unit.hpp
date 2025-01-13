@@ -1,22 +1,27 @@
   #include <vector>
   #include <iostream>
-class ControlUnit {
 
+struct control_unit{
+  
   bool sel;
   int sel_ula;
   int carga_ac;
   bool incrementa_pc;
   int carga_pc
   
+  
 };
-class ULA {
+
+struct ULA{
+  
   int x;
   int y;
-  void receber(rdm a,acumulador b){
-    x = b;
-    y = a;
+  
+  void receber(RDM a,AC b){
+    x = b.ac;
+    y = a.data;
   }
-  void operation(NZ result,ControlUnit a) {
+  void operation(NZ result,control_unit a) {
     if (a.sel_ula == 0) {
 
       result.result = x + y;
@@ -30,15 +35,16 @@ class ULA {
     else if(a.sel_ula == 3){
       result.result = y;
     }
+  }
   };
 
-  class NZ {
-
+struct NZ {
+    
     bool N;
     bool Z;
     int result;
     
-    void operation(ControlUnit AC) {
+    void operation(control_unit a) {
 
       if (result > 0) {
         N = false;
@@ -54,37 +60,35 @@ class ULA {
     }
   };
 
-class REM {
+struct REM {
   int adress;
 };
 
-class RDM {
+struct RDM {
   int data;
   int adress;
 };
-class memoria{
+struct memoria{
   std::vector<int> dados;
   std::vector<int> endereços;
 };
-class RI {
+struct RI {
     int ri;
 };
-class PC {
+struct PC {
     int pc;
-    void receber(ControlUnit a){
+    void receber(control_unit a){
     pc = a.carga_pc;
-    
   }
 };
-class AC {
+struct AC {
     int ac;
-    void receber(ControlUnit a){
+    void receber(control_unit a){
     ac = a.carga_ac;
-    
   }
 };
-class MUX{
-  void mux(ControlUnit a,RDM b,PC c,REM d){
+struct MUX{
+  void mux(control_unit a,RDM b,PC c,REM d){
     if(a.sel == false){
       d.adress = c.pc;
     }

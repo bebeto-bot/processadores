@@ -1,4 +1,4 @@
-  #include <vector>
+  #include <array>
   #include <iostream>
 
 struct control_unit{
@@ -8,59 +8,58 @@ struct control_unit{
   int carga_ac;
   bool incrementa_pc;
   int carga_pc;
-  
+  void busca(ULA ula,RDM rdm,REM rem,NZ nz,memoria mem,RI ri,PC pc,AC ac,MUX mux){
+     // ciclo de busca
+        pc.pc = carga_pc;
+        rem.adress = pc.pc;
+        
+        // function read (fetch)
+        pc.pc = pc.pc + 1;
+        rdm.dado = mem.read(rem.adress);  // Read memory
+        ri.ri=rdm.dado;
+        // fim
+  }
   void selecao(ULA ula,RDM rdm,REM rem,NZ nz,memoria mem,RI ri,PC pc,AC ac,MUX mux){
-    if(opcode==0){//STA
-    //ciclo de busca
-      pc.pc = carga_pc;
-      rem.adress = pc.pc;
-      //funcao read
-      pc.pc=pc.pc+1
-      rdm.adress = ri.ri;
-    //fim
-    //ciclo ce execucao
-      pc.pc = carga_pc;
-      rem.adress = pc.pc;
-      //funcao read
-      pc.pc=pc.pc+1;
-      rdm.adress = rem.adress;
-      rdm.data = mem.dados[index];
-      rdm.data = ac.ac;
-      ac.ac = rdm.data;
-      //funcao write
+    if(ri.ri==0){//STA
+        // ciclo de execução (execution cycle)
+        ac.ac = rdm.dado;  // Store value from memory to AC
+        rem.adress = pc.pc;
+        
+        // Write back
+        mem.memory[rem.adress] = ac.ac;
 
     }
-    else if(opcode==1){
+    else if(ri.ri==1){
 
     }
-    else if(opcode==2){
+    else if(ri.ri==2){
       
     }
-    else if(opcode==3){
+    else if(ri.ri==3){
       
     }
-    else if(opcode==4){
+    else if(ri.ri==4){
       
     }
-    else if(opcode==5){
+    else if(ri.ri==5){
       
     }
-    else if(opcode==6){
+    else if(ri.ri==6){
       
     }
-    else if(opcode==7){
+    else if(ri.ri==7){
       
     }
-    else if(opcode==8){
+    else if(ri.ri==8){
       
     }
-    else if(opcode==9){
+    else if(ri.ri==9){
       
     }
-    else if(opcode==10){
+    else if(ri.ri==10){
       
     }
-    else if(opcode==11){
+    else if(ri.ri==11){
       
     }
   }
@@ -119,12 +118,15 @@ struct REM {
 };
 
 struct RDM {
-  int data;
-  int adress;
+  int dado;
 };
 struct memoria{
-  std::vector<int> dados;
-  std::vector<int> endereços;
+  std::array<int,256> memory;
+
+  int read(int address) {
+        
+        return memory[address];
+  }
 };
 struct RI {
     int ri;

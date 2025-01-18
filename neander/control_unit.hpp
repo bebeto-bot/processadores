@@ -1,10 +1,10 @@
   #include <array>
   #include <iostream>
-
+  #include <cstdint>
 struct control_unit{
   
   bool sel;
-  int sel_ula;
+  std::uint8_t sel_ula;
   bool carga_ac;
   bool incrementa_pc;
   bool carga_pc;
@@ -67,12 +67,12 @@ struct control_unit{
 
 struct ULA{
   
-  int x;
-  int y;
+  std::uint8_t x;
+  std::uint8_t y;
   
   void receber(RDM a,AC b){
     x = b.ac;
-    y = a.data;
+    y = a.dado;
   }
   void operation(NZ result,control_unit a) {
     if (a.sel_ula == 0) {
@@ -95,7 +95,7 @@ struct NZ {
     
     bool N;
     bool Z;
-    int result;
+    std::uint8_t result;
     
     void operation(control_unit a) {
 
@@ -114,31 +114,31 @@ struct NZ {
   };
 
 struct REM {
-  int adress;
+  std::uint8_t adress;
 };
 
 struct RDM {
-  int dado;
+  std::uint8_t dado;
 };
 struct memoria{
-  std::array<int,256> memory;
-  
-  int read(int address) {
+  std::array<std::uint8_t,256> memory;
+
+  std::uint8_t read(std::uint8_t address) {
         
         return memory[address];
   }
 };
 struct RI {
-    int ri;
+    std::uint8_t ri;
 };
 struct PC {
-    int pc;
+    std::uint8_t pc;
     void receber(control_unit a){
     pc = a.carga_pc;
   }
 };
 struct AC {
-    int ac;
+    std::uint8_t ac;
     void receber(control_unit a){
     ac = a.carga_ac;
   }

@@ -5,19 +5,19 @@ struct control_unit{
   
   bool sel;
   int sel_ula;
-  int carga_ac;
+  bool carga_ac;
   bool incrementa_pc;
-  int carga_pc;
+  bool carga_pc;
+  
   void busca(ULA ula,RDM rdm,REM rem,NZ nz,memoria mem,RI ri,PC pc,AC ac,MUX mux){
-     // ciclo de busca
-        pc.pc = carga_pc;
-        rem.adress = pc.pc;
+    
         
-        // function read (fetch)
-        pc.pc = pc.pc + 1;
+        rem.adress = pc.pc;
         rdm.dado = mem.read(rem.adress);  // Read memory
+        pc.pc = pc.pc + 1;
         ri.ri=rdm.dado;
-        // fim
+        
+        
   }
   void selecao(ULA ula,RDM rdm,REM rem,NZ nz,memoria mem,RI ri,PC pc,AC ac,MUX mux){
     if(ri.ri==0){//STA
@@ -122,7 +122,7 @@ struct RDM {
 };
 struct memoria{
   std::array<int,256> memory;
-
+  
   int read(int address) {
         
         return memory[address];

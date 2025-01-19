@@ -22,18 +22,18 @@ class Neander {
   NZ nz;
   memoria mem;
 
-  /*void operation() {
-    if (a.sel_ula == 0) {
+  void operatio() {
+    if (uc.sel_ula == 0) {
 
-      result.result = x + y;
-    } else if (a.sel_ula == 1) {
-      result.result = x and y;
-    } else if (a.sel_ula == 2) {
-      result.result = x or y;
-    } else if (a.sel_ula == 3) {
-      result.result = y;
+      nz.result = ula.x + ula.y;
+    } else if (uc.sel_ula == 1) {
+      nz.result = ula.x and ula.y;
+    } else if (uc.sel_ula == 2) {
+      nz.result = ula.x or ula.y;
+    } else if (uc.sel_ula == 3) {
+      nz.result = ula.y;
     }
-  }*/
+  }
   void mux() {
     uc.carga_rem = 1;
     if (uc.sel == false) {

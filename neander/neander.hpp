@@ -45,6 +45,7 @@ class Neander {
   }
   void selecao() {
     if (ri.ri == 0) { // STA
+      busca();
       // ciclo de execução (execution cycle)
       ac.ac = rdm.dado; // Store value from memory to AC
       rem.adress = pc.pc;
@@ -53,47 +54,63 @@ class Neander {
       mem.memory[rem.adress] = ac.ac;
 
     } else if (ri.ri == 1) {
+      busca();
 
     } else if (ri.ri == 2) {
+      busca();
 
     } else if (ri.ri == 3) {
+      busca();
 
     } else if (ri.ri == 4) {
+      busca();
 
     } else if (ri.ri == 5) {
+      busca();
 
     } else if (ri.ri == 6) {
+      busca();
 
     } else if (ri.ri == 7) {
+      busca();
 
     } else if (ri.ri == 8) {
+      busca();
 
     } else if (ri.ri == 9) {
+      busca();
 
     } else if (ri.ri == 10) {
+      busca();
 
     } else if (ri.ri == 11) {
+      busca();
     }
   }
-  void busca(RDM rdm, REM rem, NZ nz, memoria mem, RI ri, PC pc, AC ac) {
+  void busca() {
 
     rem.adress = pc.pc;
-    rdm.dado = mem.read(rem.adress); // Read memory
+    rdm.dado = read(); // Read memory
     pc.pc = pc.pc + 1;
     ri.ri = rdm.dado;
   }
 
   void operation() {
 
-    if (result > 0) {
-      N = false;
-      Z = false;
-    } else if (result < 0) {
-      N = true;
-      Z = false;
+    if (nz.result > 0) {
+      nz.N = false;
+      nz.Z = false;
+    } else if (nz.result < 0) {
+      nz.N = true;
+      nz.Z = false;
     } else {
-      N = false;
-      Z = true;
+      nz.N = false;
+      nz.Z = true;
     }
+  }
+
+ std::uint8_t read() {
+        
+        return mem.memory[rem.adress];
   }
 };

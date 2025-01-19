@@ -21,7 +21,21 @@ class Neander {
   ULA ula;
   NZ nz;
   memoria mem;
-  
+  Neander(){
+    ac.ac = 0;
+    pc.pc = 0;
+    rdm.dado = 0;
+    rem.adress = 0;
+    ri.ri = 0;
+    ula.y = 0;
+    ula.x = 0;
+    nz.N = 0;
+    nz.Z = 0;
+    nz.result = 0;
+    for(int i = 0;i<11;i++){
+      mem.memory[i] = i;
+    }
+  }
   void operatio() {
     if (uc.sel_ula == 0) {
 
@@ -46,12 +60,22 @@ class Neander {
   void selecao() {
     if (ri.ri == 0) { // STA
       busca();
-      // ciclo de execução (execution cycle)
-      ac.ac = rdm.dado; // Store value from memory to AC
-      rem.adress = pc.pc;
-
+      uc.sel = 0;
+      uc.carga_rem=1;
+      mux();
+       uc.carga_rem=0;
+      rdm.dado = read();
+      uc.incrementa_pc = 1;
+       pc.pc = pc.pc + 1;
+      uc.incrementa_pc=0;
+       uc.carga_rem=1;
+      rem.adress = rdm.dado; // Store value from memory to AC
+       uc.carga_rem=0;
+      ac.ac = rdm.dado;
       // Write back
-      mem.memory[rem.adress] = ac.ac;
+      uc.write = 1;
+      mem.memory[rem.adress] = rdm.dado;
+      uc.write = 0;
 
     } else if (ri.ri == 1) {
       busca();
@@ -90,11 +114,12 @@ class Neander {
   void busca() {
     uc.carga_pc=1;
     uc.carga_rem=1;
-    
-    rem.adress = pc.pc;
+    uc.sel = 0;
+    mux();
     uc.carga_pc=0;
     uc.carga_rem=0;
     uc.read = 1;
+    
     rdm.dado = read(); // Read memory
     uc.read = 0;
     uc.incrementa_pc = 1;

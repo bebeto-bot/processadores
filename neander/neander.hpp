@@ -11,7 +11,7 @@
 #include "NZ.hpp"
 
 class Neander {
-
+private:
   AC ac;
   PC pc;
   RDM rdm;
@@ -21,6 +21,7 @@ class Neander {
   ULA ula;
   NZ nz;
   memoria mem;
+public:
   Neander(){
     ac.ac = 0;
     pc.pc = 0;
@@ -142,6 +143,10 @@ class Neander {
       nz.N = false;
       nz.Z = true;
     }
+  }
+
+  void printState (){
+    std::cout << "PC: " << pc.pc << " |  RI: " << ri.ri << " |  REM: " << rem.adress;
   }
 
  std::uint8_t read() {

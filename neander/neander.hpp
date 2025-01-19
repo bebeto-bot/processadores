@@ -8,6 +8,7 @@
 #include "ULA.hpp"
 #include "control_unit.hpp"
 #include "memoria.hpp"
+#include "NZ.hpp"
 
 class Neander {
 
@@ -18,6 +19,8 @@ class Neander {
   RI ri;
   ControlUnit uc;
   ULA ula;
+  NZ nz;
+  memoria mem;
 
   /*void operation() {
     if (a.sel_ula == 0) {
@@ -31,14 +34,16 @@ class Neander {
       result.result = y;
     }
   }*/
-  void mux(control_unit a, RDM b, PC c, REM d) {
-    if (a.sel == false) {
-      d.adress = c.pc;
-    } else if (a.sel == true) {
-      d.adress = b.dado;
+  void mux() {
+    uc.carga_rem = 1;
+    if (uc.sel == false) {
+      rem.adress = pc.pc;
+    } else if (uc.sel == true) {
+      rem.adress = rdm.dado;
     }
+    uc.carga_rem = 0;
   }
-  void selecao(RDM rdm, REM rem, NZ nz, memoria mem, RI ri, PC pc, AC ac) {
+  void selecao() {
     if (ri.ri == 0) { // STA
       // ciclo de execução (execution cycle)
       ac.ac = rdm.dado; // Store value from memory to AC

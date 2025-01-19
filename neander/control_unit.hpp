@@ -7,4 +7,9 @@ struct ControlUnit {
   bool carga_ac;
   bool incrementa_pc;
   bool carga_pc;
+  bool carga_rem;
+  bool read;
+  bool write;
+  bool carga_ri;
+  bool carga_nz;
 };

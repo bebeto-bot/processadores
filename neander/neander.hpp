@@ -21,7 +21,7 @@ class Neander {
   ULA ula;
   NZ nz;
   memoria mem;
-
+  
   void operatio() {
     if (uc.sel_ula == 0) {
 
@@ -88,11 +88,21 @@ class Neander {
     }
   }
   void busca() {
-
+    uc.carga_pc=1;
+    uc.carga_rem=1;
+    
     rem.adress = pc.pc;
+    uc.carga_pc=0;
+    uc.carga_rem=0;
+    uc.read = 1;
     rdm.dado = read(); // Read memory
+    uc.read = 0;
+    uc.incrementa_pc = 1;
     pc.pc = pc.pc + 1;
+    uc.incrementa_pc=0;
+    uc.carga_ri = 1;
     ri.ri = rdm.dado;
+    uc.carga_ri = 0;
   }
 
   void operation() {

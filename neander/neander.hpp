@@ -120,6 +120,7 @@ public:
       uc.read=1;
       read();
       uc.read=0;  
+      uc.carga_rdm=0;
 ////////////////////////////
       uc.sel=1;
       mux();
@@ -127,11 +128,13 @@ public:
       uc.read=1;
       read();
       uc.read=0; 
+      uc.carga_rdm=0;
 ////////////////////////////
       uc.carga_ac=1;
       ac.ac = rdm.dado;
       uc.carga_ac=0;
-////////////////////////////            
+////////////////////////////  
+selecao();          
     } else if (ri.ri == 48) {//ADD
     
       uc.sel=0;
@@ -144,6 +147,7 @@ public:
       uc.read=1;
       read();
       uc.read=0; 
+      uc.carga_rdm=0;
 ////////////////////////////
       uc.sel=1;
       mux();
@@ -151,33 +155,49 @@ public:
       uc.read=1;
       read();
       uc.read=0; 
+      uc.carga_rdm=0;
 ///////////////////////////
       ula.y = rdm.dado;  
       ula.x= ac.ac;
       uc.sel_ula=0;
       operatio();   
+      
 ////////////////////////////      
       uc.carga_nz=1; 
       operation();
+      ac.ac=nz.result;
       uc.carga_nz=0;
+      selecao();
     } else if (ri.ri == 16) {//STA
-      
+      printState();
+      print_UnitControl();
       uc.sel=0;
       mux();
 ////////////////////////////
+printState();
+      print_UnitControl();
       uc.incrementa_pc=1;      
       pc.pc = pc.pc+1;
       uc.incrementa_pc=0;
+      
+       
 ////////////////////////////
-      uc.read=1;
+      printState();
+      print_UnitControl();uc.read=1;
       read();
+      printState();
+      print_UnitControl();
       uc.read=0; 
+      
 ///////////////////////////
+printState();
+      print_UnitControl();
       uc.sel=1;
       mux();
       uc.sel=0;
 ////////////////////////////
       uc.read=1;
+      uc.carga_rdm=1;
       read();
       uc.read=0; 
 ////////////////////////////
@@ -186,6 +206,7 @@ public:
       rdm.dado=ac.ac;
       uc.carga_rdm=0;
       write();
+      selecao();
 
     } else if (ri.ri == 240) {//HLT
     
@@ -214,6 +235,7 @@ public:
     }
   }
   void busca() {
+    
    uc.carga_pc=1;
    uc.sel=0;
    mux();
@@ -226,6 +248,7 @@ public:
     uc.read=1;
    read();
    uc.read=0;
+   uc.carga_rdm=0;
 ////////////////////////////
     uc.carga_ri=1;   
     ri.ri=rdm.dado;
@@ -266,8 +289,9 @@ public:
   }
 
  void read() {
-        
+        uc.carga_rdm=1;
         rdm.dado= mem.memory[rem.adress];
+        
   }
   void write(){
       mem.memory[rem.adress]=rdm.dado;

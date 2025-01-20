@@ -11,6 +11,10 @@
 #include "memoria.hpp"
 #include "NZ.hpp"
 
+#include <vector> 
+#include <string>
+#include <fstream>
+
 class Neander {
 private:
   AC ac;
@@ -44,9 +48,7 @@ public:
     uc.incrementa_pc=0;
     uc.read=0;
     uc.write=0;  
-    for(int i = 0;i<11;i++){
-      mem.memory[i] = i;
-    }
+    
   }
   void operatio() {
     if (uc.sel_ula == 0) {
@@ -70,10 +72,11 @@ public:
     uc.carga_rem = 0;
   }
   void selecao() {
-    if (ri.ri == 0) { // STA
+    busca();
+    if (ri.ri == 000) { 
     printState();
      print_UnitControl();
-      busca();
+    
       uc.sel = 0;
       uc.carga_rem=1;
       printState();
@@ -81,7 +84,7 @@ public:
       mux();
        uc.carga_rem=0;
        uc.read = 1;
-      rdm.dado = read();
+      read();
       uc.read = 0;
       uc.incrementa_pc = 1;
        pc.pc = pc.pc + 1;
@@ -105,94 +108,129 @@ public:
       printState();
        print_UnitControl();
 
-    } else if (ri.ri == 1) {
-      busca();
-      uc.sel = 0;
-      uc.carga_rem=1;
-     rem.adress = pc.pc;
-     uc.read = 1;
-    uc.read;
-    uc.read = 0;
-     uc.incrementa_pc=1;
-    pc.pc = pc.pc +1;
-     uc.incrementa_pc=0;
-    uc.sel=1;
-    uc.carga_rem=1;
-    mux();
-    uc.carga_rem=0;
-    uc.sel=0;
-    uc.carga_ac=1;
-    rdm.dado =  ac.ac;
-     uc.carga_ac=0;     
-      
-     
-     
-  
-    } else if (ri.ri == 2) {
-      busca();
-      rem.adress = pc.pc;
+    } else if (ri.ri == 32) {//LDA
+    
+      uc.sel=0;
+      mux();
+////////////////////////////
+      uc.incrementa_pc=1;      
       pc.pc = pc.pc+1;
-      rem.adress=rdm.dado;
-      ac.ac=rdm.dado;
+      uc.incrementa_pc=0;
+////////////////////////////
+      uc.read=1;
+      read();
+      uc.read=0;  
+////////////////////////////
+      uc.sel=1;
+      mux();
+////////////////////////////      
+      uc.read=1;
+      read();
+      uc.read=0; 
+////////////////////////////
+      uc.carga_ac=1;
+      ac.ac = rdm.dado;
+      uc.carga_ac=0;
+////////////////////////////            
+    } else if (ri.ri == 48) {//ADD
+    
+      uc.sel=0;
+      mux();
+////////////////////////////
+      uc.incrementa_pc=1;      
+      pc.pc = pc.pc+1;
+      uc.incrementa_pc=0;
+////////////////////////////
+      uc.read=1;
+      read();
+      uc.read=0; 
+////////////////////////////
+      uc.sel=1;
+      mux();
+///////////////////////////
+      uc.read=1;
+      read();
+      uc.read=0; 
+///////////////////////////
+      ula.y = rdm.dado;  
+      ula.x= ac.ac;
+      uc.sel_ula=0;
+      operatio();   
+////////////////////////////      
+      uc.carga_nz=1; 
+      operation();
+      uc.carga_nz=0;
+    } else if (ri.ri == 16) {//STA
+      
+      uc.sel=0;
+      mux();
+////////////////////////////
+      uc.incrementa_pc=1;      
+      pc.pc = pc.pc+1;
+      uc.incrementa_pc=0;
+////////////////////////////
+      uc.read=1;
+      read();
+      uc.read=0; 
+///////////////////////////
+      uc.sel=1;
+      mux();
+      uc.sel=0;
+////////////////////////////
+      uc.read=1;
+      read();
+      uc.read=0; 
+////////////////////////////
+      uc.write=1;
+      uc.carga_rdm=1;
+      rdm.dado=ac.ac;
+      uc.carga_rdm=0;
+      write();
 
-    } else if (ri.ri == 3) {
-      busca();
+    } else if (ri.ri == 240) {//HLT
+    
 
-    } else if (ri.ri == 4) {
-      busca();
 
-    } else if (ri.ri == 5) {
-      busca();
+    } else if (ri.ri == 96) {//NOT
+    
 
     } else if (ri.ri == 6) {
-      busca();
+    
 
     } else if (ri.ri == 7) {
-      busca();
+    
 
     } else if (ri.ri == 8) {
-      busca();
+    
 
     } else if (ri.ri == 9) {
-      busca();
+    
 
     } else if (ri.ri == 10) {
-      busca();
+    
 
     } else if (ri.ri == 11) {
-      busca();
+    
     }
   }
   void busca() {
-    uc.carga_pc=1;
-    uc.carga_rem=1;
-    uc.sel = 0;
-    printState();
-    print_UnitControl();
-    mux();
-    printState();
-     print_UnitControl();
-    uc.carga_pc=0;
-    uc.carga_rem=0;
-    uc.read = 1;
-    printState();
-     print_UnitControl();
-    rdm.dado = read(); // Read memory
-    uc.read = 0;
-    uc.incrementa_pc = 1;
-    printState();
-     print_UnitControl();
-    pc.pc = pc.pc + 1;
-    uc.incrementa_pc=0;
-    printState();
-     print_UnitControl();
-    uc.carga_ri = 1;
-    printState();
-     print_UnitControl();
-    ri.ri = rdm.dado;
-    uc.carga_ri = 0;
-    printState();
-     print_UnitControl();
+   uc.carga_pc=1;
+   uc.sel=0;
+   mux();
+   uc.carga_rem=1;
+////////////////////////////
+   uc.incrementa_pc=1;
+   pc.pc++;
+   uc.incrementa_pc=0;
+////////////////////////////
+    uc.read=1;
+   read();
+   uc.read=0;
+////////////////////////////
+    uc.carga_ri=1;   
+    ri.ri=rdm.dado;
+    uc.carga_ri=0;
+/////////////////////////////    
   }
 
   void operation() {
@@ -227,8 +265,30 @@ public:
     std:: cout << std::setw(60) << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
   }
 
- std::uint8_t read() {
+ void read() {
         
-        return mem.memory[rem.adress];
+        rdm.dado= mem.memory[rem.adress];
   }
+  void write(){
+      mem.memory[rem.adress]=rdm.dado;
+  }
+
+  void lertudo(const std::string& arquivoInstrucoes) {
+ 
+    std::ifstream arquivo(arquivoInstrucoes);
+
+    if (!arquivo.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo de instruções: " << arquivoInstrucoes << "\n";
+        return;
+    }
+
+    int instrucao;
+    int endereco;
+    while (arquivo >> endereco>> instrucao ) {
+        mem.memory[endereco]=instrucao;
+    }
+
+    arquivo.close();
+    
+}
 };

@@ -12,4 +12,5 @@ struct ControlUnit {
   bool write;
   bool carga_ri;
   bool carga_nz;
+  bool carga_rdm;
 };

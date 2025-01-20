@@ -16,8 +16,11 @@ ADD 23(soma do acumulador)
 STA 25(CARREGA O ACUMULADOR NA MEMORIA)
 NOP (para o programa)
 */
+
+processor.lertudo("str.txt");
 processor.selecao();
 processor.print_UnitControl();
+processor.printState();
 
     return 0;
 }

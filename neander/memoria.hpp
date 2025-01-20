@@ -3,5 +3,5 @@
 #include <cstdint>
 
 struct memoria {
-  std::array<std::uint8_t, 256> memory;
+  std::array<short, 256> memory;
 };

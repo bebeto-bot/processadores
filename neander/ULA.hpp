@@ -3,6 +3,6 @@
 
 struct ULA {
 
-  std::uint8_t x;
-  std::uint8_t y;
+  short x;
+  short y;
 };

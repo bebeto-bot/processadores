@@ -2,7 +2,9 @@
 #include <iomanip>
 #include <vector>
 
-class Registrador {
+#include "ramses.hpp"
+
+/*class Registrador {
 public:
     int valor;
     Registrador() : valor(0) {}
@@ -210,8 +212,28 @@ public:
     }
 };
 
-int main() {
+/*int main() {
     ProcessadorRamses processador;
     processador.executarPrograma();
     return 0;
+}*/
+
+int main(int argc, char *argv[]) {
+
+
+Ramses processor;
+
+std::cout << "SUBTRAÇÃO:" << std::endl;
+processor.zerar();
+processor.lertudo("sub.txt");
+processor.selecao();
+std::cout << std::endl << std::endl << std::endl;
+std::cout << "SOMA:" << std::endl;
+processor.zerar();
+processor.lertudo("str.txt");
+processor.selecao();
+processor.printMemory();
+std::cout << "Valor máximo da memória: " << processor.findMaxMemoryValue() << std::endl;
+    return 0;
+
 }

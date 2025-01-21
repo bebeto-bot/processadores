@@ -1,6 +1,6 @@
 
 #include <cstdint>
 
-struct AC {
+struct AC2 {
   short ac2;
 };

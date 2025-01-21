@@ -13,7 +13,6 @@ struct ControlUnit {
   bool carga_ri;
   bool carga_nz;
   bool carga_rdm;
-  bool s7;
   bool s3;
   bool s4;
   bool s1;

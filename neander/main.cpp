@@ -16,10 +16,14 @@ ADD 23(soma do acumulador)
 STA 25(CARREGA O ACUMULADOR NA MEMORIA)
 NOP (para o programa)
 */
-
+std::cout << "SUBTRAÇÃO:" << std::endl;
+processor.zerar();
 processor.lertudo("sub.txt");
 processor.selecao();
-
-
+std::cout << std::endl << std::endl << std::endl;
+std::cout << "SOMA:" << std::endl;
+processor.zerar();
+processor.lertudo("str.txt");
+processor.selecao();
     return 0;
 }

@@ -292,6 +292,8 @@ public:
     arquivo.close();
     
 }
-
+void zerar(){
+  pc.pc = 0;
+}
 
 };

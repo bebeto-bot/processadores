@@ -1,6 +1,6 @@
 #include <cstdint>
 
-struct NZ {
+struct NZC {
 
   bool N;
   bool Z;

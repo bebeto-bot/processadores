@@ -48,7 +48,8 @@ public:
     uc.incrementa_pc=0;
     uc.read=0;
     uc.write=0;  
-    mem.memory;
+    for(int i = 0;i<mem.memory.size();i++)
+    mem.memory[i]=0;
   }
   void operatio() {
     if (uc.sel_ula == 0) {
@@ -331,6 +332,5 @@ void printMemory() {
     
     std::cout << "━━━━━━━━━━━━━━━━━━━━┛\n";
 }
-
 
 };

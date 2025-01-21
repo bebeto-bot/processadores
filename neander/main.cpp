@@ -25,5 +25,7 @@ std::cout << "SOMA:" << std::endl;
 processor.zerar();
 processor.lertudo("str.txt");
 processor.selecao();
+processor.printMemory();
+std::cout << "Valor máximo da memória: " << processor.findMaxMemoryValue() << std::endl;
     return 0;
 }

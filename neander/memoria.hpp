@@ -1,8 +1,9 @@
 
-#include <array>
+#include <vector>
 #include <cstdint>
 
 struct memoria {
-  std::array<short, 256> memory;
-  
+    std::vector<short> memory;
+
+    memoria() : memory(256, 0) {}  // Constructor to initialize the vector with 256 elements, all set to 0
 };

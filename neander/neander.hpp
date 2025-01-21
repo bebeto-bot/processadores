@@ -48,7 +48,7 @@ public:
     uc.incrementa_pc=0;
     uc.read=0;
     uc.write=0;  
-    
+    mem.memory;
   }
   void operatio() {
     if (uc.sel_ula == 0) {
@@ -295,5 +295,42 @@ public:
 void zerar(){
   pc.pc = 0;
 }
+
+int findMaxMemoryValue() {
+    int max_value = -2147483648;  // Valor muito baixo para garantir que qualquer valor será maior inicialmente.
+    
+    // Inicializando o PC para o começo da memória
+    pc.pc = 0;
+    
+    // Percorre a memória acessando cada endereço uma vez.
+    while (pc.pc < 32) {
+        // Simula a busca pela instrução armazenada no PC
+        rem.adress = pc.pc;  // O REM recebe o valor do PC (endereço de memória)
+        rdm.dado = mem.memory[rem.adress];  // RDM recebe o valor da memória no endereço REM
+        
+        // Compara o valor lido na memória com o maior valor encontrado até agora
+        if (rdm.dado > max_value) {
+            max_value = rdm.dado;  // Atualiza o valor máximo
+        }
+        
+        // Incrementa o PC para "andar" pela memória
+        increment_PC();
+    }
+    
+    return max_value;
+}
+
+void printMemory() {
+    std::cout << "Conteúdo da Memória: \n";
+    std::cout << "━━━━━━━━━━━━━━━━━━━━┓\n";
+    
+    // Percorre todos os endereços de memória e imprime os valores armazenados
+    for (int i = 0; i < mem.memory.size(); ++i) {
+        std::cout << "Endereço " << std::setw(2) << i << ": " << std::setw(4) << mem.memory[i] << "\n";
+    }
+    
+    std::cout << "━━━━━━━━━━━━━━━━━━━━┛\n";
+}
+
 
 };

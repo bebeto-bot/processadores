@@ -19,8 +19,7 @@ NOP (para o programa)
 
 processor.lertudo("sub.txt");
 processor.selecao();
-processor.print_UnitControl();
-processor.printState();
+
 
     return 0;
 }

@@ -62,7 +62,6 @@ public:
     }
     else if(uc.sel_ula==4){
       nz.result = -ula.x-1;
-      std::cerr << nz.result << "wdgywgayd";
     }
   }
   void mux() {
@@ -173,7 +172,6 @@ public:
     ula.x=ac.ac;
     operatio();
     ac.ac = nz.result;
-    std::cout << "mostre o valor de ac  " << ac.ac <<std::endl;
     printState();
     print_UnitControl();
   }
@@ -294,4 +292,6 @@ public:
     arquivo.close();
     
 }
+
+
 };

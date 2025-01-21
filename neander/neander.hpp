@@ -61,7 +61,7 @@ public:
       nz.result = ula.y;
     }
     else if(uc.sel_ula==4){
-      nz.result = -ula.y - 1;
+      nz.result = -ula.x-1;
       std::cerr << nz.result << "wdgywgayd";
     }
   }
@@ -170,8 +170,10 @@ public:
 
   void exec_NOT() {
     uc.sel_ula = 4;
+    ula.x=ac.ac;
     operatio();
     ac.ac = nz.result;
+    std::cout << "mostre o valor de ac  " << ac.ac <<std::endl;
     printState();
     print_UnitControl();
   }

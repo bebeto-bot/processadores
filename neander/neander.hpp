@@ -52,7 +52,6 @@ public:
   }
   void operatio() {
     if (uc.sel_ula == 0) {
-
       nz.result = ula.x + ula.y;
     } else if (uc.sel_ula == 1) {
       nz.result = ula.x and ula.y;
@@ -60,6 +59,9 @@ public:
       nz.result = ula.x or ula.y;
     } else if (uc.sel_ula == 3) {
       nz.result = ula.y;
+    }
+    else if(uc.sel_ula==4){
+      nz.result = ~(ula.y);
     }
   }
   void mux() {
@@ -73,166 +75,140 @@ public:
   }
   void selecao() {
     busca();
-    if (ri.ri == 000) { 
-    printState();
-     print_UnitControl();
-    
-      uc.sel = 0;
-      uc.carga_rem=1;
+    if (ri.ri == 00) { 
+      std::cout << "NOP" << std::endl;
       printState();
-       print_UnitControl();
-      mux();
-       uc.carga_rem=0;
-       uc.read = 1;
-      read();
-      uc.read = 0;
-      uc.incrementa_pc = 1;
-       pc.pc = pc.pc + 1;
-       printState();
-        print_UnitControl();
-      uc.incrementa_pc=0;
-       uc.carga_rem=1;
-       printState();
-        print_UnitControl();
-      rem.adress = rdm.dado; // Store value from memory to AC
-       uc.carga_rem=0;
-       printState();
-        print_UnitControl();
-      ac.ac = rdm.dado;
-      // Write back
-      uc.write = 1;
-      printState();
-       print_UnitControl();
-      mem.memory[rem.adress] = rdm.dado;
-      uc.write = 0;
-      printState();
-       print_UnitControl();
-
-    } else if (ri.ri == 32) {//LDA
-    
-      uc.sel=0;
-      mux();
-////////////////////////////
-      uc.incrementa_pc=1;      
-      pc.pc = pc.pc+1;
-      uc.incrementa_pc=0;
-////////////////////////////
-      uc.read=1;
-      read();
-      uc.read=0;  
-      uc.carga_rdm=0;
-////////////////////////////
-      uc.sel=1;
-      mux();
-////////////////////////////      
-      uc.read=1;
-      read();
-      uc.read=0; 
-      uc.carga_rdm=0;
-////////////////////////////
-      uc.carga_ac=1;
-      ac.ac = rdm.dado;
-      uc.carga_ac=0;
-////////////////////////////  
-selecao();          
-    } else if (ri.ri == 48) {//ADD
-    
-      uc.sel=0;
-      mux();
-////////////////////////////
-      uc.incrementa_pc=1;      
-      pc.pc = pc.pc+1;
-      uc.incrementa_pc=0;
-////////////////////////////
-      uc.read=1;
-      read();
-      uc.read=0; 
-      uc.carga_rdm=0;
-////////////////////////////
-      uc.sel=1;
-      mux();
-///////////////////////////
-      uc.read=1;
-      read();
-      uc.read=0; 
-      uc.carga_rdm=0;
-///////////////////////////
-      ula.y = rdm.dado;  
-      ula.x= ac.ac;
-      uc.sel_ula=0;
-      operatio();   
-      
-////////////////////////////      
-      uc.carga_nz=1; 
-      operation();
-      ac.ac=nz.result;
-      uc.carga_nz=0;
+      print_UnitControl();
       selecao();
-    } else if (ri.ri == 16) {//STA
-      printState();
-      print_UnitControl();
-      uc.sel=0;
-      mux();
-////////////////////////////
-printState();
-      print_UnitControl();
-      uc.incrementa_pc=1;      
-      pc.pc = pc.pc+1;
-      uc.incrementa_pc=0;
-      
-       
-////////////////////////////
-      printState();
-      print_UnitControl();uc.read=1;
-      read();
-      printState();
-      print_UnitControl();
-      uc.read=0; 
-      
-///////////////////////////
-printState();
-      print_UnitControl();
-      uc.sel=1;
-      mux();
-      uc.sel=0;
-////////////////////////////
-      uc.read=1;
-      uc.carga_rdm=1;
-      read();
-      uc.read=0; 
-////////////////////////////
-      uc.write=1;
-      uc.carga_rdm=1;
-      rdm.dado=ac.ac;
-      uc.carga_rdm=0;
-      write();
+    } else if (ri.ri == 32) { // LDA
+      std::cout << "LDA" << std::endl;
+      exec_LDA();
       selecao();
-
-    } else if (ri.ri == 240) {//HLT
-    
-
-
-    } else if (ri.ri == 96) {//NOT
-    
-
-    } else if (ri.ri == 6) {
-    
-
-    } else if (ri.ri == 7) {
-    
-
-    } else if (ri.ri == 8) {
-    
-
-    } else if (ri.ri == 9) {
-    
-
-    } else if (ri.ri == 10) {
-    
-
-    } else if (ri.ri == 11) {
-    
+    } else if (ri.ri == 48) { // ADD
+      std::cout << "ADD" << std::endl;
+      exec_ADD();
+      selecao();
+    } else if (ri.ri == 16) { // STA
+      std::cout << "STA" << std::endl;
+      exec_STA();
+      selecao();
+    } else if (ri.ri == 240) { // HLT
+      std::cout << "HLT" << std::endl;
+      printState();
+      print_UnitControl();
+    } else if (ri.ri == 96) { // NOT
+      std::cout << "NOT" << std::endl;
+      exec_NOT();
+      selecao();
+    } else if (ri.ri == 64) { // JMP
+      std::cout << "JMP" << std::endl;
+      exec_JMP();
+      selecao();
+    } else if (ri.ri == 80) { // JN
+      std::cout << "JN" << std::endl;
+      exec_JN();
+      selecao();
+    } else if (ri.ri == 112) { // JZ
+      std::cout << "JZ" << std::endl;
+      exec_JZ();
+      selecao();
+    } else {
+      std::cerr << "Instrução inválida: " << ri.ri << std::endl;
     }
+  }
+
+  void exec_LDA() {
+    uc.sel = 0;
+    mux();
+    increment_PC();
+    read();
+    uc.sel = 1;
+    mux();
+    read();
+    uc.carga_ac = 1;
+    ac.ac = rdm.dado;
+    uc.carga_ac = 0;
+    printState();
+    print_UnitControl();
+  }
+
+  void exec_ADD() {
+    uc.sel = 0;
+    mux();
+    increment_PC();
+    read();
+    uc.sel = 1;
+    mux();
+    read();
+    ula.y = rdm.dado;
+    ula.x = ac.ac;
+    uc.sel_ula = 0;
+    operatio();
+    uc.carga_nz = 1;
+    operation();
+    ac.ac = nz.result;
+    uc.carga_nz = 0;
+    printState();
+    print_UnitControl();
+  }
+
+  void exec_STA() {
+    uc.sel = 0;
+    mux();
+    increment_PC();
+    read();
+    uc.sel = 1;
+    mux();
+    uc.write = 1;
+    rdm.dado = ac.ac;
+    write();
+    uc.write = 0;
+    printState();
+    print_UnitControl();
+  }
+
+  void exec_NOT() {
+    uc.sel_ula = 4;
+    operatio();
+    ac.ac = nz.result;
+    printState();
+    print_UnitControl();
+  }
+
+  void exec_JMP() {
+    uc.sel = 0;
+    mux();
+    increment_PC();
+    read();
+    pc.pc = rdm.dado;
+    printState();
+    print_UnitControl();
+  }
+
+  void exec_JN() {
+    if (nz.N) {
+      exec_JMP();
+    } else {
+      increment_PC();
+      printState();
+      print_UnitControl();
+    }
+  }
+
+  void exec_JZ() {
+    if (nz.Z) {
+      exec_JMP();
+    } else {
+      increment_PC();
+      printState();
+      print_UnitControl();
+    }
+  }
+
+  void increment_PC() {
+    uc.incrementa_pc = 1;
+    pc.pc += 1;
+    uc.incrementa_pc = 0;
   }
   void busca() {
     

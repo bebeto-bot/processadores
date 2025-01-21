@@ -17,7 +17,7 @@ STA 25(CARREGA O ACUMULADOR NA MEMORIA)
 NOP (para o programa)
 */
 
-processor.lertudo("str.txt");
+processor.lertudo("sub.txt");
 processor.selecao();
 processor.print_UnitControl();
 processor.printState();

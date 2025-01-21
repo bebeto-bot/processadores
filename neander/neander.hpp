@@ -61,7 +61,8 @@ public:
       nz.result = ula.y;
     }
     else if(uc.sel_ula==4){
-      nz.result = ~(ula.y);
+      nz.result = -ula.y - 1;
+      std::cerr << nz.result << "wdgywgayd";
     }
   }
   void mux() {
@@ -248,10 +249,10 @@ public:
 
   void printState (){
     std::cout << "STATUS: \n";
-    std:: cout << std::setw(30) << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n";
+    std:: cout << std::setw(30) << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n";
     std::cout << "┃ PC:  " << pc.pc << " |  RI: " << ri.ri << " |  REM: " << rem.adress <<  " ┃" << std::endl;
     std::cout << "┃ RDM: " << rdm.dado << " |  AC: " << ac.ac <<  "           ┃" << std::endl;
-    std:: cout << std::setw(30) << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
+    std:: cout << std::setw(30) << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
   }
 
   void print_UnitControl (){
